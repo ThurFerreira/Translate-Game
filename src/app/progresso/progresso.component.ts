@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-progresso',
@@ -7,4 +7,11 @@ import { Component } from '@angular/core';
 })
 export class ProgressoComponent {
 
+  //recebendo valores no momento da instanciação do component
+  //@Input serve para passar valores entre os components
+  @Input() public progress:number = 0
+
+  constructor(){
+
+  }
 }

@@ -3,7 +3,8 @@
 
         <div class="row">
             <div class="col-sm-6">
-                <app-progresso></app-progresso>
+                <!--linha 10 progresso.component-->
+                <app-progresso [progress]="progresso"></app-progresso>
             </div>
             <div class="col-sm-6">
                 <div class="d-flex justify-content-end">
@@ -15,13 +16,13 @@
         <div class="row">
             <div class="col">
                 <h6>{{instrucao}} </h6>
-                <p>{{"\"" + frases[0].fraseEng + "\""}}</p>
+                <p>{{"\"" + rodadaFrase.fraseEng + "\""}}</p>
                   <div class="form-floating">
-                    <textarea class="form-control" 
+                    <textarea id="text-area" class="form-control" 
                     placeholder="Insira a frase traduzida aqui" 
                     id="floatingTextarea" 
-                    (input)="atualizaResposta($event)">
-                </textarea>
+                    (input)="atualizaResposta($event)"
+                    [value]="resposta"></textarea>
                     <label for="floatingTextarea">Insira a frase traduzida aqui</label>
                   </div>
             </div>
@@ -29,7 +30,7 @@
 
         <div class="row">
             <div class="d-flex justify-content-end">
-                <button type="button" class="btn btn-primary">Verificar</button>
+                <button type="button" class="btn btn-primary" (click)="verificarResposta()">Verificar</button>
             </div>
         </div>
 
