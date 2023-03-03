@@ -1,0 +1,15 @@
+#jumb{
+    background: black;
+    margin-top: 20px;
+}
+
+.form-floating {
+    color: gray;
+}
+
+.btn {
+    margin-top: 7px;
+    width: 7%;
+    background: white;
+    color: gray;
+}
