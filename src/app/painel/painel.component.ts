@@ -28,7 +28,7 @@ export class PainelComponent implements OnDestroy{
     this.atualizaFrase()
   }
   ngOnDestroy(): void {
-    
+
   }
 
   public atualizaResposta(retornoEvento:Event):void{
@@ -37,10 +37,11 @@ export class PainelComponent implements OnDestroy{
   }
 
   public verificarResposta():void {
-    //this.atualizaFrase()
-    //this.clearArea()
 
     if(this.rodadaFrase.frasePtBr == this.resposta){//se estiver correto
+      console.log("acertou")
+      this.rodada++
+      this.progresso += (100/this.frases.length)
 
       //fluxo de vitoria do jogo
       if(this.rodada === this.frases.length){
@@ -50,12 +51,14 @@ export class PainelComponent implements OnDestroy{
     }else{//se estiver errado
 
       this.tentativas--
-    
+      console.log("errou")
+
       //fluxo de derrota do jogo
       if(this.tentativas < 0){
         this.eventoEncerramento.emit("derrota")
       }
     }
+    this.atualizaFrase()
   }
 
   public atualizaFrase():void {
