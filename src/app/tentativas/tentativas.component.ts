@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { Coracao } from '../shared/coracao.model';
 
 @Component({
   selector: 'app-tentativas',
@@ -6,8 +7,28 @@ import { Component } from '@angular/core';
   styleUrls: ['./tentativas.component.css']
 })
 
-export class TentativasComponent {
-  public coracaoCheio:string = "/assets/coracao_cheio.png"
-  public coracaoVazio :string = "/assets/coracao_vazio.png"
+export class TentativasComponent implements OnInit, OnChanges{
 
+  //uso do input é pra quek recebe a informação (lado esquerdo do igual)
+  @Input() public tent!: number;
+
+  constructor(){
+  }
+
+  ngOnChanges(): void {
+    //removendo coração
+    if(this.tent !== this.coracoes.length){
+      this.coracoes[this.tent].cheio = false
+    }
+  }
+
+  ngOnInit(): void {
+     
+  }
+
+  public coracoes:Array<Coracao> = [
+    new Coracao(true),
+    new Coracao(true),
+    new Coracao(true)
+  ]
 }

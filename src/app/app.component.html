@@ -1,2 +1,19 @@
 <app-top></app-top>
-<app-painel></app-painel>
+
+<div *ngIf="jogoEmAndamento; else derrota">
+    <app-painel (eventoEncerramento)="encerrarJogo($event)"></app-painel>
+</div>
+
+<ng-template #derrota>
+    <div *ngIf="tipoEncerramento === 'derrota'; else vitoria">
+        <button class="btn btn-primary" (click)="reiniciarJogo()">Jogar Novamente</button>
+        <img src="../assets/fundo.jpg" width="100%" height="100%" position="fixed">
+    </div>
+</ng-template>
+
+<ng-template #vitoria>
+    <div>
+        <button class="btn btn-primary" (click)="reiniciarJogo()">Jogar Novamente</button>
+        <img src="../assets/fundo.jpg" width="100%" height="100%" position="fixed">
+    </div>
+</ng-template>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, Output } from '@angular/core';
 import { Frase } from '../shared/frase.model';
 import{ FRASES } from './frases-mock'
 
@@ -7,16 +7,27 @@ import{ FRASES } from './frases-mock'
   templateUrl: './painel.component.html',
   styleUrls: ['./painel.component.css']
 })
-export class PainelComponent {
+export class PainelComponent implements OnDestroy{
   
   public frases:Array<Frase> = FRASES
   public instrucao:string = "Traduza a frase: "
   public resposta:string = ''
+
   public rodada:number = 0
   public rodadaFrase!:Frase
+
   public progresso:number = 0
 
+  public tentativas:number = 3
+
+  //@Output- "jogando" a variavel encerrarJogo para um escopo maior, podendo ser acessivel por seu pai
+  @Output() 
+    public eventoEncerramento:EventEmitter<string> = new EventEmitter()//emitindo um evento do tipo string
+
   constructor(){
+    this.atualizaFrase()
+  }
+  ngOnDestroy(): void {
     
   }
 
@@ -26,38 +37,32 @@ export class PainelComponent {
   }
 
   public verificarResposta():void {
-    this.atualizaFrase()
+    //this.atualizaFrase()
     //this.clearArea()
 
     if(this.rodadaFrase.frasePtBr == this.resposta){//se estiver correto
-      alert('A tradução está correta')
 
-      if(this.rodada < this.frases.length-1){
-        //trocando a pergunta da rodada
-          this.rodada++
-
-          //atualiza a frase da rodada
-          this.atualizaFrase()
-
-          //aumentando o progresso
-          this.progresso += (100 / this.frases.length)
-
-          //limpa a resposta
-          this.resposta = ''
-           
-        }else{
-          this.rodada = 0
-          alert('O jogo acabou!')
-        }
+      //fluxo de vitoria do jogo
+      if(this.rodada === this.frases.length){
+        this.eventoEncerramento.emit("vitoria")
+      }
 
     }else{//se estiver errado
-      alert('A tradução está incorreta')
 
-      //removendo coração
+      this.tentativas--
+    
+      //fluxo de derrota do jogo
+      if(this.tentativas < 0){
+        this.eventoEncerramento.emit("derrota")
+      }
     }
   }
 
   public atualizaFrase():void {
+    ///defne a frase da rodada
     this.rodadaFrase = this.frases[this.rodada]
+    
+    //limpando a resposta
+    this.resposta = ''
   }
 }
